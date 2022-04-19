@@ -37,7 +37,7 @@
     <column id="COL9" populated="true" UUID="0307c668-9fc2-4d67-8178-9beffa0deb6e" autoIncrement="false" autoIncrementSequenceName="funcionarios_salario_seq" defaultValue="" name="salario" nullable="1" physicalName="salario" precision="10" referenceCount="1" scale="2" sourceDataTypeName="UserDefinedSQLType" type="3" userDefinedTypeUUID="cc1304ea-628a-4fc5-a84a-06ba14759152" >
      <remarks>Salário do funcionário.</remarks>
     </column>
-    <column id="COL10" populated="true" UUID="abf85017-ed6f-4319-b3f9-424db5f6f99a" autoIncrement="false" autoIncrementSequenceName="funcionarios_cpf_supervisor_seq" defaultValue="" name="cpf_supervisor" nullable="0" physicalName="cpf_supervisor" precision="11" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="1" userDefinedTypeUUID="67ddc63f-5541-4dd1-9236-632d9d155e80" >
+    <column id="COL10" populated="true" UUID="abf85017-ed6f-4319-b3f9-424db5f6f99a" autoIncrement="false" autoIncrementSequenceName="funcionarios_cpf_supervisor_seq" defaultValue="" name="cpf_supervisor" nullable="1" physicalName="cpf_supervisor" precision="11" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="1" userDefinedTypeUUID="67ddc63f-5541-4dd1-9236-632d9d155e80" >
      <remarks>Cpf do supervisor. Será uma FK para a própria tabela(um-auto-relacionamento).</remarks>
     </column>
     <column id="COL11" populated="true" UUID="cc5cb593-e072-4335-9cdb-c884ceaa0606" autoIncrement="false" autoIncrementSequenceName="funcionarios_numero_departamento_seq" defaultValue="" name="numero_departamento" nullable="0" physicalName="numero_departamento" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
@@ -200,8 +200,8 @@
    <relationship id="REL60" populated="true" UUID="68ff721a-dbf0-41e3-8b4e-857ed563a0e3" deferrability="7" deleteRule="3" fk-table-ref="TAB1" fkCardinality="7" identifying="false" name="funcionarios_funcionarios_fk" physicalName="funcionarios_funcionarios_fk" pk-table-ref="TAB1" pkCardinality="2" updateRule="3" >
     <column-mapping id="CMP61" populated="true" UUID="7a86e219-51a6-4779-8bbc-c2d3c1452d29" fk-column-ref="COL10" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL2" />
    </relationship>
-   <relationship id="REL62" populated="true" UUID="589083bd-c826-464b-bf10-a1a021707496" deferrability="7" deleteRule="3" fk-table-ref="TAB20" fkCardinality="3" identifying="false" name="funcionarios_departamento_fk" physicalName="funcionarios_departamento_fk" pk-table-ref="TAB1" pkCardinality="2" updateRule="3" >
-    <column-mapping id="CMP63" populated="true" UUID="258938d1-dd8e-4c5f-94bc-ab23fc164ee4" fk-column-ref="COL23" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL2" />
+   <relationship id="REL62" populated="true" UUID="589083bd-c826-464b-bf10-a1a021707496" deferrability="7" deleteRule="3" fk-table-ref="TAB20" fkCardinality="6" identifying="false" name="funcionarios_departamento_fk" physicalName="funcionarios_departamento_fk" pk-table-ref="TAB1" pkCardinality="2" updateRule="3" >
+    <column-mapping id="CMP63" populated="true" UUID="9dc3bd3b-f3e7-4544-bc21-2aa29a314995" fk-column-ref="COL23" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL2" />
    </relationship>
    <relationship id="REL64" populated="true" UUID="5504a454-f27e-417b-a868-7bd3276d9e2f" deferrability="7" deleteRule="3" fk-table-ref="TAB29" fkCardinality="7" identifying="false" name="departamento_projeto_fk" physicalName="departamento_projeto_fk" pk-table-ref="TAB20" pkCardinality="2" updateRule="3" >
     <column-mapping id="CMP65" populated="true" UUID="4da1d55f-d2ce-4a00-9d54-3cac36dc312f" fk-column-ref="COL33" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL21" />
@@ -230,7 +230,7 @@
   <table-link relationship-ref="REL66" pkConnection="0.48214285714285715" fkConnection="0.5106951871657754" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="72"/>
   <table-link relationship-ref="REL68" pkConnection="0.34153005464480873" fkConnection="0.6379821958456974" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="132"/>
   <table-link relationship-ref="REL60" pkConnection="0.16149068322981366" fkConnection="0.7682926829268293" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="36"/>
-  <table-link relationship-ref="REL62" pkConnection="0.5528455284552846" fkConnection="0.3829787234042553" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="33"/>
+  <table-link relationship-ref="REL62" pkConnection="0.13414634146341464" fkConnection="0.3829787234042553" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="33"/>
  </play-pen>
  <critic-manager>
   <critic-grouping platformType="Generic" enabled="true">
