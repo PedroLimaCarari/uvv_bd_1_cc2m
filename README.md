@@ -4,5 +4,4 @@ Este será um repositório para a disciplina de Banco de Dados estudada no 1º p
 ## Conteudo:
 - MySQL
 - PostgreSQL
-- Oracle Database
 - Markdown
