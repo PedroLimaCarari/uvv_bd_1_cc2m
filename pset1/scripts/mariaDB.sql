@@ -3,10 +3,9 @@ CREATE USER 'pedro'@'localhost' IDENTIFIED BY 1234;
 -- Depois criaremos o banco de dados da uvv.
 CREATE DATABASE uvv CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 -- Agora iremos entrar no banco de dados da uvv e garantir todos os privilégios ao usuário.
-USE uvv;
 GRANT ALL PRIVILEGES ON uvv.* to 'pedro'@'localhost'; 
 SYSTEM mysql -pedro -p;
-
+USE uvv;
 -- Agora iremos implementar o modelo elmasri no MySQL.
 -- Começaremos criando a tabela funcionarios.
 CREATE TABLE funcionarios (
