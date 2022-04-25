@@ -1,13 +1,11 @@
-
 -- Criando um usuário para adiministrar o banco de dados.
 
 CREATE USER pedro with
-	CREATEDB;
+	CREATEDB 
+	INHERIT
+	LOGIN
+	PASSWORD '1234';
 	
--- Agora trocamos para o usuário criado.
-
-ALTER USER pedro PASSWORD null;
-
 -- Criando banco de dados
 -- No modelo template0, com o propietário pedro(usuário criado), encoding utf8.
 
@@ -18,6 +16,9 @@ CREATE DATABASE uvv
 	LC_COLLATE 'pt_BR.UTF-8'
 	LC_CTYPE 'pt_BR.UTF-8'
 	ALLOW_CONNECTIONS true;
+	
+-- Agora iremos nos conectar no banco de dados da uvv com o usuário criado. 
+\c uvv pedro;
 	
 -- Agora será criado o schema elmasri e é autorizado pelo usuário criado(pedro).
 
