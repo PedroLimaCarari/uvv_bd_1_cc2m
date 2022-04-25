@@ -137,50 +137,50 @@ ALTER TABLE dependente MODIFY COLUMN parentesco VARCHAR(15) COMMENT 'Descrição
 ALTER TABLE dependente ADD CONSTRAINT funcionarios_dependente_fk
 FOREIGN KEY (cpf_funcionario)
 REFERENCES funcionarios (cpf)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION;
+ON DELETE cascade
+ON UPDATE cascade;
 
 -- Criando uma foreing key cpf_funcionario na tabela trabalha_em e relacionando ao cpf da tabela funcionarios.
 ALTER TABLE trabalha_em ADD CONSTRAINT funcionarios_trabalha_em_fk
 FOREIGN KEY (cpf_funcionario)
 REFERENCES funcionarios (cpf)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION;
+ON DELETE cascade
+ON UPDATE cascade;
 
 -- Criando uma foreing key cpf_supervisor na tabela funcionarios e relacionando ao cpf da tabela funcionarios.
 ALTER TABLE funcionarios ADD CONSTRAINT funcionarios_funcionarios_fk
 FOREIGN KEY (cpf_supervisor)
 REFERENCES funcionarios (cpf)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION;
+ON DELETE cascade
+ON UPDATE cascade;
 
 -- Criando uma foreing key cpf_gerente na tabela departamento e relacionando ao cpf da tabela funcionarios.
 ALTER TABLE departamento ADD CONSTRAINT funcionarios_departamento_fk
 FOREIGN KEY (cpf_gerente)
 REFERENCES funcionarios (cpf)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION;
+ON DELETE cascade
+ON UPDATE cascade;
 
 -- Crindo uma foreing key numero_departamento na tabela projeto e relacionando ao numero_departamento da tabela departamento.
 ALTER TABLE projeto ADD CONSTRAINT departamento_projeto_fk
 FOREIGN KEY (numero_departamento)
 REFERENCES departamento (numero_departamento)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION;
+ON DELETE cascade
+ON UPDATE cascade;
 
 -- Criando uma foreing key numero_departamento na tabela localizacoes_departamento e relacionando ao numero_departamento da tabela departamento.
 ALTER TABLE localizacoes_departamento ADD CONSTRAINT departamento_localizacoes_departamento_fk
 FOREIGN KEY (numero_departamento)
 REFERENCES departamento (numero_departamento)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION;
+ON DELETE cascade
+ON UPDATE cascade;
 
 -- Criando uma foreing key numero_projeto na tabela trabalha_em e relacionando ao numero_projeto na tabela projeto.
 ALTER TABLE trabalha_em ADD CONSTRAINT projeto_trabalha_em_fk
 FOREIGN KEY (numero_projeto)
 REFERENCES projeto (numero_projeto)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION;
+ON DELETE cascade
+ON UPDATE cascade;
 
 -- Agora iremos inserir os valores de cada tabela, sendo a primeira delas a de funcionários.
 INSERT INTO funcionarios(primeiro_nome,nome_meio,ultimo_nome,cpf,data_nascimento,endereco,sexo,salario,cpf_supervisor,numero_departamento) VALUES
