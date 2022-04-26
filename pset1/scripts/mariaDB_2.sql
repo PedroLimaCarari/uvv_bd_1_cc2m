@@ -35,9 +35,9 @@ ALTER TABLE funcionarios MODIFY COLUMN sexo CHAR(1) COMMENT 'Sexo do funcionári
 
 ALTER TABLE funcionarios MODIFY COLUMN salario DECIMAL(10, 2) COMMENT 'Salário do funcionário.'CHECK (salario >= 0) ;
 
-ALTER TABLE funcionarios MODIFY COLUMN cpf_supervisor CHAR(11) NOT NULL COMMENT 'Cpf do supervisor. Será uma FK para a própria tabela(um-auto-relacionamento).'CHECK (cpf_supervisor != cpf);
+ALTER TABLE funcionarios MODIFY COLUMN cpf_supervisor CHAR(11)  COMMENT 'Cpf do supervisor. Será uma FK para a própria tabela(um-auto-relacionamento).'CHECK (cpf_supervisor != cpf);
 
-ALTER TABLE funcionarios MODIFY COLUMN numero_departamento INTEGER COMMENT 'Número do departamento do funcionário.'CHECK (numero_departamento >= 0);
+ALTER TABLE funcionarios MODIFY COLUMN numero_departamento INTEGER NOT NULL COMMENT 'Número do departamento do funcionário.'CHECK (numero_departamento >= 0);
 
 -- Criando tabela departamento.
 CREATE TABLE departamento (
