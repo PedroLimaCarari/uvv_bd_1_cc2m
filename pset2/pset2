@@ -1,0 +1,135 @@
+-- 1 Prepare um relatório que mostre a média salarial dos funcionários de cada departamento.
+
+SELECT d.numero_departamento, AVG(salario) AS media_salarial
+FROM funcionarios AS f, departamento AS d
+WHERE d.numero_departamento = f.numero_departamento
+GROUP BY d.numero_departamento ;
+
+-- 2 prepare um relatório que mostre a média salarial dos homens e das mulheres.
+
+SELECT f.sexo, CAST(AVG(salario) AS DECIMAL (10, 2)) AS média 
+FROM funcionarios AS f
+WHERE (sexo = 'M')
+GROUP BY f.sexo
+UNION 
+SELECT f.sexo, CAST(AVG(salario) AS DECIMAL (10, 2)) 
+FROM funcionarios AS f
+WHERE (sexo = 'F')
+GROUP BY f.sexo;
+
+-- 3 prepare um relatório que liste o nome dos departamentos e, para cada departamento, inclua as seguintes informações de seus funcionários: o nome completo, a data de nascimento, a idade em anos completos e o salário.
+
+SELECT (f.primeiro_nome ||' '|| f.nome_meio ||' '|| f.ultimo_nome) AS nome_completo, f.data_nascimento, CAST(f.salario AS DECIMAL(10,2)), d.nome_departamento, AGE(f.data_nascimento) AS idade
+FROM funcionarios AS f 
+INNER JOIN
+departamento AS d ON (f.numero_departamento = d.numero_departamento);
+
+-- 4 prepare um relatório que mostre o nome completo dos funcionários, a idade em anos completos, o salário atual e o salário com um reajuste que obedece ao seguinte critério: se o salário atual do funcionário é inferior a 35.000 o reajuste deve ser de 20%, e se o salário atual do funcionário for igual ou superior a 35.000 o reajuste deve ser de 15%
+
+SELECT (f.primeiro_nome ||' '|| f.nome_meio ||' '|| f.ultimo_nome) AS nome_completo, CAST(f.salario AS DECIMAL (10,2)) AS salario, CAST (f.salario*1.2 AS DECIMAL (10,2)) AS salario_reajustado, d.nome_departamento
+FROM funcionarios AS f, departamento AS d
+WHERE salario < 35000 AND f.numero_departamento = d.numero_departamento
+UNION
+SELECT (f.primeiro_nome ||' '|| f.nome_meio ||' '|| f.ultimo_nome) AS nome_completo, CAST(f.salario AS DECIMAL (10,2)) AS salario, CAST (f.salario*1.15 AS DECIMAL (10,2)) AS salario_reajustado, d.nome_departamento
+FROM funcionarios AS f, departamento AS d
+WHERE salario >= 35000 AND f.numero_departamento = d.numero_departamento;
+
+-- 5 prepare um relatório que liste, para cada departamento, o nome do gerente e o nome dos funcionários. Ordene esse relatório por nome do departamento (em ordem crescente) e por salário dos funcionários (em ordem decrescente).
+
+SELECT d.nome_departamento, (f.primeiro_nome ||' '|| f.nome_meio ||' '|| f.ultimo_nome) AS nome_completo, f.salario
+FROM departamento AS d, funcionarios AS f
+WHERE d.numero_departamento = f.numero_departamento
+ORDER BY d.nome_departamento ASC, f.salario DESC;
+
+-- 6 prepare um relatório que mostre o nome completo dos funcionários que têm dependentes, o departamento onde eles trabalham e, para cada funcionário, também liste o nome completo dos dependentes, a idade em anos de cada dependente e o sexo (o sexo NÃO DEVE aparecer como M ou F, deve aparecer como “Masculino” ou “Feminino”).
+
+SELECT f.numero_departamento, (f.primeiro_nome ||' '|| f.nome_meio ||' '|| f.ultimo_nome) AS nome_funcionario, d.nome_dependente, AGE(d.data_nascimento) AS idade_dependente, (case when(d.sexo = 'M')then 'Masculino' when(d.sexo = 'F')then 'Feminino'end) as sexo
+FROM funcionarios AS f, dependente AS d
+WHERE f.cpf = d.cpf_funcionario;
+
+-- 7 prepare um relatório que mostre, para cada funcionário que NÃO TEM dependente, seu nome completo, departamento e salário.
+
+SELECT (f.primeiro_nome||' '|| f.nome_meio||' '|| f.ultimo_nome) AS nome_funcionario, f.numero_departamento, f.salario
+FROM funcionarios AS f
+WHERE f.cpf NOT IN (SELECT d.cpf_funcionario FROM dependente AS d);
+
+-- 8 prepare um relatório que mostre, para cada departamento, os projetos desse departamento e o nome completo dos funcionários que estão alocados em cada projeto. Além disso inclua o número de horas trabalhadas por cada funcionário, em cada projeto.
+
+SELECT d.nome_departamento, p.nome_projeto, (f.primeiro_nome||' '|| f.nome_meio||' '|| f.ultimo_nome) AS nome_funcionario, t.horas
+FROM funcionarios AS f
+INNER JOIN trabalha_em AS t
+ON f.cpf = t.cpf_funcionario
+INNER JOIN projeto AS p
+ON t.numero_projeto = p.numero_projeto
+INNER JOIN departamento AS d
+ON p.numero_departamento = d.numero_departamento
+ORDER BY d.nome_departamento, p.nome_projeto, f.salario DESC;
+
+-- 9 prepare um relatório que mostre a soma total das horas de cada projeto em cada departamento. Obs.: o relatório deve exibir o nome do departamento, o nome do projeto e a soma total das horas.
+SELECT d.nome_departamento, p.nome_projeto, SUM(T.horas) AS total_horas
+FROM funcionarios AS f
+INNER JOIN trabalha_em AS t
+ON f.cpf = t.cpf_funcionario
+INNER JOIN projeto AS p
+ON t.numero_projeto = p.numero_projeto
+INNER JOIN departamento AS d
+ON p.numero_departamento = d.numero_departamento
+GROUP BY d.nome_departamento, p.nome_projeto;
+
+-- 10 prepare um relatório que mostre a média salarial dos funcionários de cada departamento.
+
+SELECT d.numero_departamento, AVG(salario) AS media_salarial
+FROM funcionarios AS f, departamento AS d
+WHERE d.numero_departamento = f.numero_departamento
+GROUP BY d.numero_departamento ;
+
+-- 11 considerando que o valor pago por hora trabalhada em um projeto é de 50 reais, prepare um relatório que mostre o nome completo do funcionário, o nome do projeto e o valor total que o funcionário receberá referente às horas trabalhadas naquele projeto.
+
+SELECT (f.primeiro_nome||' '||f.nome_meio||' '|| f.ultimo_nome) AS nome_funcionario, p.nome_projeto, CAST (t.horas * 50 AS DECIMAL(10,2)) AS valor_total
+FROM funcionarios AS f
+INNER JOIN trabalha_em AS t
+ON f.cpf = t.cpf_funcionario
+INNER JOIN projeto AS p
+ON t.numero_projeto = p.numero_projeto
+ORDER BY f.salario DESC;
+
+-- 12 seu chefe está verificando as horas trabalhadas pelos funcionários nos projetos e percebeu que alguns funcionários, mesmo estando alocadas à algum projeto, não registraram nenhuma hora trabalhada. Sua tarefa é preparar um relatório que liste o nome do departamento, o nome do projeto e o nome dos funcionários que, mesmo estando alocados a algum projeto, não registraram nenhuma hora trabalhada.
+
+SELECT d.nome_departamento, p.nome_projeto, (f.primeiro_nome||' '|| f.nome_meio||' '|| f.ultimo_nome) AS nome_funcionario
+FROM funcionarios AS f
+INNER JOIN departamento AS d
+ON f.numero_departamento = d.numero_departamento
+INNER JOIN trabalha_em AS t
+ON f.cpf = t.cpf_funcionario
+INNER JOIN projeto AS p
+ON t.numero_projeto = p.numero_projeto
+WHERE t.horas IS NULL;
+
+-- 13 durante o natal deste ano a empresa irá presentear todos os funcionários e todos os dependentes (sim, a empresa vai dar um presente para cada funcionário e um presente para cada dependente de cada funcionário) e pediu para que você preparasse um relatório que listasse o nome completo das pessoas a serem presenteadas (funcionários e dependentes), o sexo e a idade em anos completos (para poder comprar um presente adequado). Esse relatório deve estar ordenado pela idade em anos completos, de forma decrescente.
+
+SELECT (f.primeiro_nome||' '||f.nome_meio||' '||f.ultimo_nome) AS nome, (case when (f.sexo='m') then 'Masculino' when (f.sexo='f') then 'Feminino'end) as sexo, DATE_PART('year', AGE(f.data_nascimento)) AS idade
+FROM funcionarios AS f
+UNION
+SELECT (d.nome_dependente) AS nome, (case when (d.sexo='M') then 'Masculino' when (d.sexo='F') then 'Feminino'end) as sexo, DATE_PART('year', AGE(d.data_nascimento)) AS idade
+FROM dependente AS d
+ORDER BY idade DESC; 
+
+-- 14 prepare um relatório que exiba quantos funcionários cada departamento tem.
+
+SELECT d.nome_departamento, COUNT(f.cpf) AS quantidade_funcionarios
+FROM funcionarios AS f
+INNER JOIN departamento AS d
+ON f.numero_departamento = d.numero_departamento
+GROUP BY d.nome_departamento;
+
+-- 15 como um funcionário pode estar alocado em mais de um projeto, prepare um relatório que exiba o nome completo do funcionário, o departamento desse funcionário e o nome dos projetos em que cada funcionário está alocado. Atenção: se houver algum funcionário que não está alocado em nenhum projeto, o nome completo e o departamento também devem aparecer no relatório.
+
+SELECT (F.primeiro_nome||''|| F.nome_meio||''||F.ultimo_nome) AS nome_funcionario, d.nome_departamento, p.nome_projeto
+FROM funcionarios AS f
+INNER JOIN trabalha_em AS t
+ON f.cpf = t.cpf_funcionario
+INNER JOIN projeto AS p
+ON t.numero_projeto = p.numero_projeto
+INNER JOIN departamento AS d
+ON f.numero_departamento = d.numero_departamento
+ORDER BY nome_funcionario;
